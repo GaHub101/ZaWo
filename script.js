@@ -5,21 +5,21 @@ window.onload = () => {
 };
 
 function submitVote(value) {
-  // Setze den Wert im Hidden-Feld
-  document.getElementById("voteValue").value = value;
-
-  // Verhindere Mehrfachvoting direkt
+  // Bereits abgestimmt? -> Abbrechen
   if (localStorage.getItem("voted") === "true") {
     alert("Du hast bereits abgestimmt.");
     return;
   }
 
-  // Formular absenden
-  document.getElementById("voteForm").submit();
-
-  // Stimme als 'verbraucht' speichern
+  // Wert setzen und Formular absenden
+  document.getElementById("voteValue").value = value;
   localStorage.setItem("voted", "true");
 
-  // Feedback anzeigen
-  document.querySelector(".container").innerHTML = "<h2>🎉 Danke für deine Stimme!</h2>";
+  // Absenden per Timeout, damit Google das Formular korrekt empfängt
+  document.getElementById("voteForm").submit();
+
+  // 1 Sekunde warten, dann Bestätigung anzeigen
+  setTimeout(() => {
+    document.querySelector(".container").innerHTML = "<h2>🎉 Danke für deine Stimme!</h2>";
+  }, 1000);
 }
