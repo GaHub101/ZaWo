@@ -2,116 +2,21 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Hot or Not</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f4f8fb;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    h1 {
-      color: #333;
-      margin-bottom: 1rem;
-    }
-
-    .vote-buttons {
-      display: flex;
-      gap: 2rem;
-    }
-
-    button {
-      padding: 1rem 2rem;
-      font-size: 1.5rem;
-      border: none;
-      border-radius: 16px;
-      cursor: pointer;
-      transition: transform 0.1s ease, box-shadow 0.2s;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    button:hover {
-      transform: scale(1.05);
-    }
-
-    .hot {
-      background-color: #ff6b6b;
-      color: white;
-    }
-
-    .not {
-      background-color: #74c0fc;
-      color: white;
-    }
-
-    .counter {
-      margin-top: 2rem;
-      font-size: 1.2rem;
-      color: #555;
-    }
-
-    .number {
-      font-weight: bold;
-      color: #222;
-    }
-
-    .message {
-      margin-top: 1rem;
-      font-style: italic;
-      color: green;
-    }
-  </style>
+  <title>Hot or Not?</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>🔥 Hot or ❌ Not?</h1>
-  <div class="vote-buttons">
-    <button class="hot" onclick="vote('hot')">🔥 Hot</button>
-    <button class="not" onclick="vote('not')">❌ Not</button>
-  </div>
-  <div class="counter">
-    Hot: <span class="number" id="hot-count">0</span> |
-    Not: <span class="number" id="not-count">0</span>
-  </div>
-  <div class="message" id="msg"></div>
-
-  <script>
-    // Initialisieren
-    let hotVotes = parseInt(localStorage.getItem('hotVotes')) || 0;
-    let notVotes = parseInt(localStorage.getItem('notVotes')) || 0;
-    let voted = localStorage.getItem('hasVoted');
-
-    document.getElementById('hot-count').textContent = hotVotes;
-    document.getElementById('not-count').textContent = notVotes;
-
-    if (voted) {
-      document.getElementById('msg').textContent = "Du hast bereits abgestimmt. Danke!";
-    }
-
-    function vote(type) {
-      if (localStorage.getItem('hasVoted')) {
-        alert("Du hast bereits abgestimmt.");
-        return;
-      }
-
-      if (type === 'hot') {
-        hotVotes++;
-        localStorage.setItem('hotVotes', hotVotes);
-        document.getElementById('hot-count').textContent = hotVotes;
-      } else if (type === 'not') {
-        notVotes++;
-        localStorage.setItem('notVotes', notVotes);
-        document.getElementById('not-count').textContent = notVotes;
-      }
-
-      localStorage.setItem('hasVoted', 'true');
-      document.getElementById('msg').textContent = "Danke für deine Stimme!";
-    }
-  </script>
+  <h1>🔥 Hot or Not?</h1>
+  <img src="https://via.placeholder.com/300" alt="Bewertbares Bild">
+  <form id="voteForm" action="https://docs.google.com/forms/d/e/DEINE_FORM_ID/formResponse" method="POST" target="hidden_iframe" onsubmit="submitted=true;">
+    <input type="hidden" name="entry.DEINE_ENTRY_ID" id="voteValue">
+    <div class="buttons">
+      <button type="button" onclick="submitVote('Hot')">🔥 Hot</button>
+      <button type="button" onclick="submitVote('Not')">❄️ Not</button>
+    </div>
+  </form>
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+  <script src="script.js"></script>
 </body>
 </html>
