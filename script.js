@@ -1,10 +1,5 @@
-function submitVote(value) {
-  // Setze den Wert in das versteckte Formularfeld
-  document.getElementById("voteValue").value = value;
-
-  // Formular absenden
+function submitVote(choice) {
+  document.getElementById("voteValue").value = choice;
   document.getElementById("voteForm").submit();
-
-  // Feedback anzeigen
-  document.querySelector(".container").innerHTML = "<h2>🎉 Danke für deine Stimme!</h2>";
+  alert("Danke für deine Bewertung!");
 }
