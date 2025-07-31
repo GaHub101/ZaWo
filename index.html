@@ -2,12 +2,12 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
+  <title>Hot or Not</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hot or Not Voting</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #f9f9fb;
+      background: #f4f8fb;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -60,6 +60,12 @@
       font-weight: bold;
       color: #222;
     }
+
+    .message {
+      margin-top: 1rem;
+      font-style: italic;
+      color: green;
+    }
   </style>
 </head>
 <body>
@@ -72,19 +78,39 @@
     Hot: <span class="number" id="hot-count">0</span> |
     Not: <span class="number" id="not-count">0</span>
   </div>
+  <div class="message" id="msg"></div>
 
   <script>
-    let hotVotes = 0;
-    let notVotes = 0;
+    // Initialisieren
+    let hotVotes = parseInt(localStorage.getItem('hotVotes')) || 0;
+    let notVotes = parseInt(localStorage.getItem('notVotes')) || 0;
+    let voted = localStorage.getItem('hasVoted');
+
+    document.getElementById('hot-count').textContent = hotVotes;
+    document.getElementById('not-count').textContent = notVotes;
+
+    if (voted) {
+      document.getElementById('msg').textContent = "Du hast bereits abgestimmt. Danke!";
+    }
 
     function vote(type) {
+      if (localStorage.getItem('hasVoted')) {
+        alert("Du hast bereits abgestimmt.");
+        return;
+      }
+
       if (type === 'hot') {
         hotVotes++;
+        localStorage.setItem('hotVotes', hotVotes);
         document.getElementById('hot-count').textContent = hotVotes;
       } else if (type === 'not') {
         notVotes++;
+        localStorage.setItem('notVotes', notVotes);
         document.getElementById('not-count').textContent = notVotes;
       }
+
+      localStorage.setItem('hasVoted', 'true');
+      document.getElementById('msg').textContent = "Danke für deine Stimme!";
     }
   </script>
 </body>
